@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Protección y Seguridad en Sistemas Operativos</title>
+  <meta name="description" content="Unidad VI: concepto y objetivos de protección y seguridad, clasificación, funciones, matrices de acceso, protección basada en el lenguaje, validación y amenazas, y cifrado.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9B%A1%EF%B8%8F%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="#inicio" aria-label="Inicio">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4 8 13v17c0 15 10 25 24 30 14-5 24-15 24-30V13L32 4z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><rect x="22" y="28" width="20" height="16" rx="3" fill="currentColor"/><path d="M26 28v-5a6 6 0 0 1 12 0v5" fill="none" stroke="currentColor" stroke-width="4"/></svg>
+        <span>Protección y seguridad</span>
+      </a>
+      <nav class="nav" aria-label="Temas">
+        <a href="#t61">6.1</a>
+        <a href="#t62">6.2</a>
+        <a href="#t63">6.3</a>
+        <a href="#t64">6.4</a>
+        <a href="#t65">6.5</a>
+        <a href="#t66">6.6</a>
+        <a href="#t67">6.7</a>
+        <a href="#referencias">Fuentes</a>
+      </nav>
+      <button class="theme-btn" id="themeToggle" type="button" aria-pressed="false">Modo oscuro</button>
+    </div>
+  </header>
+
+  <main id="contenido">
+
+    <!-- ===================== PORTADA ===================== -->
+    <section class="hero" id="inicio">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <p class="eyebrow">Unidad VI · Sistemas operativos</p>
+            <h1>Protección y seguridad</h1>
+            <p class="lead">Qué significa proteger un sistema operativo, cómo se decide quién puede hacer qué con cada recurso y cómo se defiende el sistema de las amenazas.</p>
+            <a class="btn" href="#t61">Empezar por el 6.1</a>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><path d="M32 4 8 13v17c0 15 10 25 24 30 14-5 24-15 24-30V13L32 4z" fill="currentColor" opacity=".14"/><path d="M32 4 8 13v17c0 15 10 25 24 30 14-5 24-15 24-30V13L32 4z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><rect x="22" y="28" width="20" height="16" rx="3" fill="currentColor"/><path d="M26 28v-5a6 6 0 0 1 12 0v5" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="32" cy="36" r="2.4" fill="var(--bg)"/></svg>
+          </div>
+        </div>
+
+        <ol class="topic-index" aria-label="Índice de temas">
+          <li><a href="#t61"><span class="num">6.1</span> Concepto y objetivos de protección y seguridad</a></li>
+          <li><a href="#t62"><span class="num">6.2</span> Clasificación aplicada a la seguridad</a></li>
+          <li><a href="#t63"><span class="num">6.3</span> Funciones del sistema de protección</a></li>
+          <li><a href="#t64"><span class="num">6.4</span> Implantación de matrices de acceso</a></li>
+          <li><a href="#t65"><span class="num">6.5</span> Protección basada en el lenguaje</a></li>
+          <li><a href="#t66"><span class="num">6.6</span> Validación y amenazas al sistema</a></li>
+          <li><a href="#t67"><span class="num">6.7</span> Cifrado</a></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===================== 6.1 ===================== -->
+    <section class="tema" id="t61" aria-labelledby="h61">
+      <div class="wrap">
+        <div class="tema-head"><span class="num">6.1</span><h2 id="h61">Concepto y objetivos de protección y seguridad</h2></div>
+        <p class="lead">La <strong>seguridad</strong> es el problema completo: impedir que personas no autorizadas lean, modifiquen o dejen sin servicio la información y los recursos de un sistema. La <strong>protección</strong> es el conjunto de mecanismos concretos del sistema operativo que se usan para resguardar esa información.</p>
+
+        <h3>Objetivos de la seguridad</h3>
+        <div class="table-scroll">
+          <table>
+            <caption>Cada objetivo tiene una amenaza asociada</caption>
+            <thead><tr><th>Objetivo</th><th>Qué garantiza</th><th>Amenaza</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Confidencialidad</th><td>Solo las personas autorizadas pueden leer los datos.</td><td>Exposición de datos</td></tr>
+              <tr><th scope="row">Integridad</th><td>Nadie puede modificar los datos sin autorización.</td><td>Alteración de datos</td></tr>
+              <tr><th scope="row">Disponibilidad</th><td>El sistema responde cuando los usuarios legítimos lo necesitan.</td><td>Negación de servicio</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>¿Quién ataca? Tipos de intrusos</h3>
+        <div class="grid">
+          <div class="card"><span class="tag">Nivel 1</span><h4>Curiosos casuales</h4><p>Usuarios sin conocimientos técnicos que husmean en archivos que no les corresponden.</p></div>
+          <div class="card"><span class="tag">Nivel 2</span><h4>Husmeadores internos</h4><p>Personas de la propia organización que consideran un reto leer información ajena.</p></div>
+          <div class="card"><span class="tag">Nivel 3</span><h4>Intentos decididos de lucro</h4><p>Quienes buscan dinero: robo de datos bancarios, fraudes, venta de información.</p></div>
+          <div class="card"><span class="tag">Nivel 4</span><h4>Espionaje comercial o militar</h4><p>Ataques planeados y con muchos recursos contra información estratégica.</p></div>
+        </div>
+
+        <h3>No todo es un ataque: pérdida accidental de datos</h3>
+        <ul class="clean">
+          <li><strong>Desastres naturales:</strong> incendios, inundaciones, terremotos.</li>
+          <li><strong>Errores de hardware o software:</strong> fallas de disco, cortes de energía, errores de programas.</li>
+          <li><strong>Errores humanos:</strong> borrar un archivo por equivocación, montar el disco equivocado.</li>
+        </ul>
+        <p>La defensa principal contra estos tres casos son los <strong>respaldos</strong> mantenidos en otro lugar.</p>
+
+        <div class="card">
+          <span class="tag">Principio guía</span>
+          <h4>Mínimo privilegio</h4>
+          <p>Cada usuario y cada programa debe tener solo los permisos necesarios para su tarea, y ninguno más. Así, si algo falla o es atacado, el daño queda limitado.</p>
+        </div>
+
+        <p class="book"><strong>En el libro (Tanenbaum, 2009):</strong> sección 9.1 «El entorno de seguridad», p. 613; 9.1.2 «Intrusos», p. 615; 9.1.3 «Pérdida accidental de datos», p. 616; 9.3 «Mecanismos de protección», p. 622.</p>
+      </div>
+    </section>
+
+    <!-- ===================== 6.2 ===================== -->
+    <section class="tema" id="t62" aria-labelledby="h62">
+      <div class="wrap">
+        <div class="tema-head"><span class="num">6.2</span><h2 id="h62">Clasificación aplicada a la seguridad</h2></div>
+        <p class="lead">Clasificar es asignar a cada usuario y a cada dato un <strong>nivel de seguridad</strong>, y decidir qué se puede leer o escribir comparando esos niveles. Es la base de la <strong>seguridad multinivel</strong>, usada sobre todo en entornos militares y gubernamentales.</p>
+
+        <p class="partial"><strong>Nota sobre la fuente:</strong> el libro de Tanenbaum trata la seguridad multinivel y los modelos formales (secciones 9.3.6 y 9.3.7), pero no una «clasificación de sistemas» con ese nombre. La tabla de niveles de certificación de más abajo es un complemento de otra bibliografía (ver Fuentes).</p>
+
+        <h3>Niveles de clasificación de la información</h3>
+        <p>Un ejemplo típico ordena la información de menor a mayor sensibilidad: <strong>Sin clasificar → Confidencial → Secreto → Ultrasecreto</strong>. Cada persona recibe una «autorización» (nivel) y cada documento una clasificación.</p>
+
+        <div class="grid">
+          <div class="card">
+            <span class="tag">Confidencialidad</span>
+            <h4>Modelo Bell-LaPadula</h4>
+            <p><strong>No leer hacia arriba:</strong> un usuario no lee documentos de nivel superior al suyo.<br><strong>No escribir hacia abajo:</strong> no puede copiar información de su nivel a un nivel inferior, porque la filtraría.</p>
+          </div>
+          <div class="card">
+            <span class="tag">Integridad</span>
+            <h4>Modelo Biba</h4>
+            <p><strong>No leer hacia abajo:</strong> no se toma información de fuentes menos confiables.<br><strong>No escribir hacia arriba:</strong> un proceso poco confiable no puede alterar datos de mayor confianza.</p>
+          </div>
+        </div>
+
+        <div class="demo" id="demoNiveles">
+          <h3>Prueba los dos modelos</h3>
+          <p class="hint">Elige el nivel del usuario, el nivel del documento y la operación. Verás qué decide cada modelo.</p>
+          <div class="controls">
+            <div><label for="nivUser">Nivel del usuario</label><select id="nivUser"></select></div>
+            <div><label for="nivDoc">Nivel del documento</label><select id="nivDoc"></select></div>
+            <div><label for="nivOp">Operación</label>
+              <select id="nivOp"><option value="leer">Leer</option><option value="escribir">Escribir</option></select>
+            </div>
+          </div>
+          <div class="results" id="nivOut" aria-live="polite"></div>
+        </div>
+
+        <h3>Sistemas confiables y canales encubiertos</h3>
+        <ul class="clean">
+          <li>La <strong>base de cómputo confiable (TCB)</strong> es el conjunto de hardware y software que debe funcionar correctamente para que se cumpla la política de seguridad. Cuanto más pequeña, más fácil de verificar.</li>
+          <li>Un <strong>canal encubierto</strong> es una forma de pasar información entre procesos usando algo que no fue diseñado para comunicar (por ejemplo, el tiempo de uso del procesador), saltándose las reglas del sistema.</li>
+        </ul>
+
+        <h3>Clasificación de la seguridad de los sistemas (complemento)</h3>
+        <div class="table-scroll">
+          <table>
+            <caption>Divisiones del «Libro Naranja» (TCSEC) del Departamento de Defensa de EE. UU.</caption>
+            <thead><tr><th>División</th><th>Nombre</th><th>Idea</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">D</th><td>Protección mínima</td><td>Sistemas que no cumplen ningún nivel superior.</td></tr>
+              <tr><th scope="row">C1, C2</th><td>Protección discrecional</td><td>El propietario decide quién accede a sus recursos; C2 agrega auditoría y aislamiento entre usuarios.</td></tr>
+              <tr><th scope="row">B1, B2, B3</th><td>Protección obligatoria</td><td>El sistema impone reglas de etiquetas y niveles que los usuarios no pueden cambiar.</td></tr>
+              <tr><th scope="row">A1</th><td>Diseño verificado</td><td>Se demuestra formalmente que el diseño cumple la política de seguridad.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="book"><strong>En el libro (Tanenbaum, 2009):</strong> 9.3.4 «Sistemas confiables», p. 630; 9.3.5 «Base de cómputo confiable», p. 631; 9.3.6 «Modelos formales de los sistemas seguros», p. 632; 9.3.7 «Seguridad multinivel», p. 634; 9.3.8 «Canales encubiertos», p. 637.</p>
+      </div>
+    </section>
+
+    <!-- ===================== 6.3 ===================== -->
+    <section class="tema" id="t63" aria-labelledby="h63">
+      <div class="wrap">
+        <div class="tema-head"><span class="num">6.3</span><h2 id="h63">Funciones del sistema de protección</h2></div>
+        <p class="lead">El sistema de protección responde a una pregunta constante: <em>¿este usuario o proceso puede hacer esta operación sobre este recurso?</em> Para ello cumple varias funciones.</p>
+
+        <div class="grid">
+          <div class="card"><span class="tag">Función 1</span><h4>Identificar y autenticar</h4><p>Comprobar quién es el usuario antes de darle acceso (contraseñas, tarjetas, biometría; ver 6.6).</p></div>
+          <div class="card"><span class="tag">Función 2</span><h4>Autorizar el acceso</h4><p>Decidir qué operaciones puede hacer cada sujeto sobre cada objeto, usando dominios y matrices de acceso (ver 6.4).</p></div>
+          <div class="card"><span class="tag">Función 3</span><h4>Aislar procesos y memoria</h4><p>El hardware distingue el modo kernel del modo usuario y da a cada proceso su propio espacio de direcciones, para que no se interfieran.</p></div>
+          <div class="card"><span class="tag">Función 4</span><h4>Proteger archivos y dispositivos</h4><p>Archivos y dispositivos de E/S aparecen en el sistema de archivos como objetos con nombre, así que se les aplican las mismas reglas de permisos.</p></div>
+          <div class="card"><span class="tag">Función 5</span><h4>Separar política y mecanismo</h4><p>El <em>mecanismo</em> es cómo se hace cumplir la regla; la <em>política</em> es qué regla se aplica. Separarlos permite cambiar las reglas sin reescribir el sistema.</p></div>
+          <div class="card"><span class="tag">Función 6</span><h4>Registrar y auditar</h4><p>Guardar bitácoras de accesos e intentos fallidos para detectar abusos y revisar qué ocurrió.</p></div>
+        </div>
+
+        <h3>Ejemplo real: permisos de archivo en UNIX y Linux</h3>
+        <p>Cada archivo guarda tres grupos de permisos: para el <strong>propietario</strong>, para su <strong>grupo</strong> y para <strong>los demás</strong>. Cada grupo puede tener lectura (<code>r</code>), escritura (<code>w</code>) y ejecución (<code>x</code>).</p>
+<pre><code>-rwxr-x---  1  ana  equipo  informe.sh
+ │└┬┘└┬┘└┬┘
+ │ │  │  └─ otros:        sin permisos
+ │ │  └──── grupo:         leer y ejecutar
+ │ └─────── propietario:   leer, escribir y ejecutar
+ └───────── tipo de archivo (- = archivo normal)</code></pre>
+
+        <p class="book"><strong>En el libro (Tanenbaum, 2009):</strong> cap. 1, p. 1 (modo kernel y modo usuario); 5.3.3, p. 355 (los dispositivos como objetos con nombre y protegidos como archivos); 9.3 «Mecanismos de protección», p. 622; 9.4 «Autenticación», p. 641.</p>
+      </div>
+    </section>
+
+    <!-- ===================== 6.4 ===================== -->
+    <section class="tema" id="t64" aria-labelledby="h64">
+      <div class="wrap">
+        <div class="tema-head"><span class="num">6.4</span><h2 id="h64">Implantación de matrices de acceso</h2></div>
+        <p class="lead">Un <strong>dominio</strong> es un conjunto de pares <em>(objeto, derechos)</em>: dice qué se puede hacer con cada objeto. Cada proceso se ejecuta dentro de un dominio (en UNIX, un dominio queda definido por el UID y el GID del usuario). Todos los dominios juntos forman la <strong>matriz de acceso</strong>.</p>
+
+        <ul class="clean">
+          <li><strong>Filas:</strong> los dominios (usuarios, grupos o procesos).</li>
+          <li><strong>Columnas:</strong> los objetos (archivos, impresoras, memoria…).</li>
+          <li><strong>Cada celda:</strong> los derechos que el dominio tiene sobre ese objeto.</li>
+        </ul>
+
+        <h3>El problema de implantarla</h3>
+        <p>Una matriz completa sería enorme y casi toda estaría vacía, así que no se guarda tal cual. Se almacena de dos formas:</p>
+        <div class="grid">
+          <div class="card"><span class="tag">Por columnas</span><h4>Listas de control de acceso (ACL)</h4><p>Cada objeto lleva la lista de quién puede hacer qué con él. Se revisa al abrir el objeto. Es fácil quitar el permiso de alguien. Los permisos de UNIX son una versión corta de este esquema.</p></div>
+          <div class="card"><span class="tag">Por filas</span><h4>Capacidades</h4><p>Cada dominio guarda una lista de «llaves» que indican a qué objetos puede acceder y con qué derechos. Se pueden pasar a otro proceso, pero deben protegerse contra falsificación y es más difícil revocarlas.</p></div>
+        </div>
+
+        <div class="demo" id="demoMatriz">
+          <h3>Explora la matriz de acceso</h3>
+          <p class="hint">Mismo contenido, tres formas de verlo. Cambia la vista para comparar.</p>
+          <div class="tabs" role="group" aria-label="Vista">
+            <button type="button" data-vista="matriz" aria-pressed="true">Matriz completa</button>
+            <button type="button" data-vista="acl" aria-pressed="false">ACL (por objeto)</button>
+            <button type="button" data-vista="cap" aria-pressed="false">Capacidades (por dominio)</button>
+          </div>
+          <div id="matrizVista"></div>
+
+          <h3>¿Se permite este acceso?</h3>
+          <div class="controls">
+            <div><label for="mDom">Dominio</label><select id="mDom"></select></div>
+            <div><label for="mObj">Objeto</label><select id="mObj"></select></div>
+            <div><label for="mDer">Derecho</label><select id="mDer"></select></div>
+          </div>
+          <div class="results" id="mOut" aria-live="polite"></div>
+        </div>
+
+        <p class="book"><strong>En el libro (Tanenbaum, 2009):</strong> 9.3.1 «Dominios de protección», p. 622; 9.3.2 «Listas de control de acceso», p. 624; 9.3.3 «Capacidades», p. 627.</p>
+      </div>
+    </section>
+
+    <!-- ===================== 6.5 ===================== -->
+    <section class="tema" id="t65" aria-labelledby="h65">
+      <div class="wrap">
+        <div class="tema-head"><span class="num">6.5</span><h2 id="h65">Protección basada en el lenguaje</h2></div>
+        <p class="lead">En vez de depender solo del núcleo del sistema operativo, parte de la protección se puede expresar en el <strong>lenguaje de programación</strong>: el compilador y el entorno de ejecución comprueban qué puede hacer cada pieza de código.</p>
+
+        <p class="partial"><strong>Nota sobre la fuente:</strong> el libro de Tanenbaum no tiene una sección con este nombre. Lo más cercano es el encapsulamiento de código móvil y la seguridad de Java (9.8.6 y 9.8.7). El resto del tema es un complemento de otra bibliografía (ver Fuentes).</p>
+
+        <h3>Ideas principales</h3>
+        <div class="grid">
+          <div class="card"><span class="tag">Tipos</span><h4>Seguridad de tipos</h4><p>El lenguaje impide usar un dato de una forma no permitida, por ejemplo tratar un entero como si fuera una dirección de memoria o escribir fuera de los límites de un arreglo.</p></div>
+          <div class="card"><span class="tag">Encapsulamiento</span><h4>Datos privados</h4><p>Con <code>private</code> y <code>public</code>, una clase decide qué partes de sus datos puede tocar el resto del programa.</p></div>
+          <div class="card"><span class="tag">Verificación</span><h4>Antes y durante la ejecución</h4><p>Muchas reglas se comprueban al compilar o al cargar el programa, así que se evita parte del costo de vigilar cada acceso en tiempo de ejecución.</p></div>
+          <div class="card"><span class="tag">Declarativa</span><h4>La política en el código</h4><p>El programador declara qué recursos puede usar un componente, y el sistema se encarga de hacerlo cumplir.</p></div>
+        </div>
+
+        <h3>El caso de Java</h3>
+        <ul class="clean">
+          <li>Java se compila a <strong>bytecode</strong>, que la máquina virtual (JVM) ejecuta.</li>
+          <li>Antes de ejecutar una clase, el <strong>verificador de bytecode</strong> comprueba que respete los tipos y que no haga operaciones peligrosas con la pila.</li>
+          <li>El código descargado (como los antiguos <em>applets</em>) corría en un <strong>entorno restringido</strong> o <em>sandbox</em>, con permisos limitados según su origen o su firma.</li>
+          <li>El <em>Security Manager</em>, que aplicaba esas políticas, fue declarado obsoleto y retirado en versiones recientes de Java. Hoy el aislamiento suele delegarse en el sistema operativo y en contenedores.</li>
+        </ul>
+
+        <h3>Ejemplos actuales</h3>
+        <p><strong>Rust</strong> evita en tiempo de compilación muchos errores de memoria que en C causan vulnerabilidades. Los navegadores ejecutan el <strong>JavaScript</strong> de cada página en un entorno aislado con acceso limitado al equipo.</p>
+
+        <div class="table-scroll">
+          <table>
+            <caption>Dos lugares donde se puede hacer cumplir la protección</caption>
+            <thead><tr><th></th><th>Protección del sistema operativo</th><th>Protección del lenguaje</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Quién la aplica</th><td>El núcleo, con apoyo del hardware</td><td>El compilador y la máquina virtual</td></tr>
+              <tr><th scope="row">Cuándo</th><td>En tiempo de ejecución, en cada llamada al sistema</td><td>Al compilar, al cargar y al ejecutar</td></tr>
+              <tr><th scope="row">Granularidad</th><td>Procesos, archivos, dispositivos</td><td>Clases, objetos, variables</td></tr>
+              <tr><th scope="row">Límite</th><td>No ve las reglas internas de un programa</td><td>Depende de que el compilador y la VM no tengan errores</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="book"><strong>En el libro (Tanenbaum, 2009):</strong> 9.6.1 «Ataques de desbordamiento del búfer», p. 660; 9.8.3 «Firma de código», p. 701; 9.8.6 «Encapsulamiento de código móvil», p. 705; 9.8.7 «Seguridad de Java», p. 709.</p>
+      </div>
+    </section>
+
+    <!-- ===================== 6.6 ===================== -->
+    <section class="tema" id="t66" aria-labelledby="h66">
+      <div class="wrap">
+        <div class="tema-head"><span class="num">6.6</span><h2 id="h66">Validación y amenazas al sistema</h2></div>
+        <p class="lead">La <strong>validación</strong> (autenticación) comprueba que quien pide acceso es quien dice ser. Las <strong>amenazas</strong> son los intentos de saltarse esa protección o de aprovechar errores del software.</p>
+
+        <details open>
+          <summary>Validación: ¿quién eres?</summary>
+          <div class="inner">
+            <div class="grid">
+              <div class="card"><span class="tag">Algo que sabes</span><h4>Contraseñas</h4><p>El sistema no guarda la contraseña, sino su <em>hash</em> (con «sal» agregada). Los ataques típicos son adivinarla o probar un diccionario de palabras comunes.</p></div>
+              <div class="card"><span class="tag">Algo que tienes</span><h4>Objeto físico</h4><p>Tarjeta con chip o banda magnética, llave USB o token. Se puede perder o robar, por eso suele combinarse con un PIN.</p></div>
+              <div class="card"><span class="tag">Algo que eres</span><h4>Biometría</h4><p>Huella, iris o rostro. Puede equivocarse: rechazar a la persona correcta o aceptar a la equivocada.</p></div>
+            </div>
+            <p>Usar <strong>dos o más</strong> de estas categorías juntas (autenticación de dos factores) hace mucho más difícil suplantar a alguien.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Ataques desde el interior</summary>
+          <div class="inner">
+            <div class="grid">
+              <div class="card warn"><span class="tag">Bomba lógica</span><h4>Código dormido</h4><p>Programa escondido que se activa cuando se cumple una condición, por ejemplo cuando un empleado deja de aparecer en la nómina.</p></div>
+              <div class="card warn"><span class="tag">Trampa</span><h4>Puerta trasera</h4><p>Entrada secreta que un programador deja en el sistema para saltarse la autenticación normal.</p></div>
+              <div class="card warn"><span class="tag">Suplantación</span><h4>Falso inicio de sesión</h4><p>Pantalla de acceso falsa que captura el nombre y la contraseña del usuario que cree estar entrando al sistema.</p></div>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>Explotación de errores en el código</summary>
+          <div class="inner">
+            <div class="grid">
+              <div class="card warn"><span class="tag">Desbordamiento de búfer</span><h4>Escribir de más</h4><p>Se mandan más datos de los que caben en un arreglo y se sobrescribe la memoria vecina, por ejemplo la dirección de retorno de una función.</p></div>
+              <div class="card warn"><span class="tag">Cadena de formato</span><h4>Entrada como formato</h4><p>Si un programa usa texto del usuario como cadena de formato de <code>printf</code>, el atacante puede leer o escribir en memoria.</p></div>
+              <div class="card warn"><span class="tag">Retorno a libc</span><h4>Reusar código existente</h4><p>En lugar de inyectar código propio, el atacante desvía la ejecución hacia funciones que ya existen en la biblioteca del sistema.</p></div>
+              <div class="card warn"><span class="tag">Desbordamiento de enteros</span><h4>Cuentas que se pasan</h4><p>Una operación excede el rango del entero y da un resultado inesperado, por ejemplo un tamaño de memoria demasiado pequeño.</p></div>
+              <div class="card warn"><span class="tag">Inyección de código</span><h4>Entrada sin validar</h4><p>Se cuelan comandos (de shell, de SQL) dentro de datos que el programa acepta sin revisar.</p></div>
+              <div class="card warn"><span class="tag">Escalada de privilegios</span><h4>Ganar más permisos</h4><p>Aprovechar un fallo para pasar de usuario normal a administrador (<em>root</em>).</p></div>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>Malware</summary>
+          <div class="inner">
+            <div class="grid">
+              <div class="card warn"><span class="tag">Troyano</span><h4>Parece útil</h4><p>Programa que aparenta hacer algo legítimo, pero esconde código malicioso. El usuario lo instala voluntariamente.</p></div>
+              <div class="card warn"><span class="tag">Virus</span><h4>Se adhiere y se copia</h4><p>Se inserta en otros programas y se replica cuando el programa infectado se ejecuta. Necesita un anfitrión.</p></div>
+              <div class="card warn"><span class="tag">Gusano</span><h4>Se propaga solo</h4><p>Se copia a sí mismo por la red sin necesitar un programa anfitrión, aprovechando fallos de otros equipos.</p></div>
+              <div class="card warn"><span class="tag">Spyware</span><h4>Espía</h4><p>Reúne información del usuario (sitios visitados, datos escritos) y la envía sin que él lo sepa.</p></div>
+              <div class="card warn"><span class="tag">Rootkit</span><h4>Se esconde</h4><p>Conjunto de herramientas que oculta la presencia del intruso y le mantiene acceso privilegiado al sistema.</p></div>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>Defensas</summary>
+          <div class="inner">
+            <div class="grid">
+              <div class="card"><span class="tag">Red</span><h4>Firewall</h4><p>Filtra el tráfico entre redes según reglas: deja pasar lo permitido y bloquea el resto.</p></div>
+              <div class="card"><span class="tag">Detección</span><h4>Antivirus</h4><p>Busca malware por firmas conocidas y por comportamiento sospechoso, y lo elimina o aísla.</p></div>
+              <div class="card"><span class="tag">Origen</span><h4>Firma de código</h4><p>El software lleva una firma digital que permite comprobar quién lo publicó y que no fue alterado.</p></div>
+              <div class="card"><span class="tag">Aislamiento</span><h4>Encarcelamiento</h4><p>Un programa se ejecuta en un entorno restringido (como <code>chroot</code>) donde solo ve una parte del sistema.</p></div>
+              <div class="card"><span class="tag">Vigilancia</span><h4>Detección de intrusos</h4><p>Vigila el comportamiento del sistema y avisa cuando algo se desvía de lo normal.</p></div>
+              <div class="card"><span class="tag">Código móvil</span><h4>Encapsulamiento</h4><p>El código descargado (scripts, applets) se ejecuta en un entorno aislado con permisos limitados.</p></div>
+            </div>
+          </div>
+        </details>
+
+        <p class="book"><strong>En el libro (Tanenbaum, 2009):</strong> 9.4 «Autenticación», p. 641; 9.5 «Ataques desde el interior», p. 656; 9.6 «Cómo explotar los errores en el código», p. 659; 9.7 «Malware», p. 667; 9.8 «Defensas», p. 692.</p>
+      </div>
+    </section>
+
+    <!-- ===================== 6.7 ===================== -->
+    <section class="tema" id="t67" aria-labelledby="h67">
+      <div class="wrap">
+        <div class="tema-head"><span class="num">6.7</span><h2 id="h67">Cifrado</h2></div>
+        <p class="lead">Cifrar es transformar un mensaje legible (<strong>texto plano</strong>) en uno ilegible (<strong>texto cifrado</strong>) usando un algoritmo y una <strong>clave</strong>. Solo quien tenga la clave correcta puede volver a leerlo.</p>
+        <p>Una regla básica (principio de Kerckhoffs): la seguridad debe depender del secreto de la <em>clave</em>, no de ocultar el algoritmo, que puede ser público y revisado por expertos.</p>
+
+        <h3>Tipos de cifrado</h3>
+        <div class="grid">
+          <div class="card"><span class="tag">Una sola clave</span><h4>Clave secreta (simétrica)</h4><p>La misma clave cifra y descifra. Es rápida, pero ambos extremos deben compartir la clave sin que nadie más la conozca. Ejemplo actual: AES. DES ya es obsoleto.</p></div>
+          <div class="card"><span class="tag">Dos claves</span><h4>Clave pública (asimétrica)</h4><p>Cada persona tiene una clave pública (se reparte) y una privada (se guarda). Lo cifrado con una solo se descifra con la otra. Ejemplo: RSA. Es más lenta.</p></div>
+          <div class="card"><span class="tag">Sin vuelta atrás</span><h4>Funciones de una vía</h4><p>Es fácil calcular el resultado, pero prácticamente imposible recuperar la entrada. Se usan los <em>hash</em> (como SHA-256) para guardar contraseñas y comprobar integridad.</p></div>
+          <div class="card"><span class="tag">Autenticidad</span><h4>Firmas digitales</h4><p>Se calcula el hash del documento y se cifra con la clave <em>privada</em> del firmante. Cualquiera lo verifica con la clave pública: prueba quién firmó y que no se alteró.</p></div>
+        </div>
+
+        <p><strong>Módulo de plataforma confiable (TPM):</strong> chip de la placa base que guarda claves de cifrado y ayuda a comprobar que el equipo arrancó sin modificaciones.</p>
+
+        <div class="demo" id="demoCesar">
+          <h3>Demo 1: cifrado César (clave secreta, versión de juguete)</h3>
+          <p class="hint">Cada letra se desplaza varias posiciones del alfabeto; el desplazamiento es la clave. Es solo un ejemplo didáctico: se rompe en segundos y no protege nada real.</p>
+          <div class="controls">
+            <div style="grid-column: 1 / -1"><label for="cTexto">Mensaje</label><input type="text" id="cTexto" value="Proteger es decidir quién puede hacer qué" autocomplete="off"></div>
+            <div><label for="cClave">Clave (desplazamiento): <span id="cClaveVal">3</span></label><input type="range" id="cClave" min="1" max="25" value="3"></div>
+            <div><label>Operación</label>
+              <div class="seg" role="group" aria-label="Operación">
+                <button type="button" data-modo="cifrar" aria-pressed="true">Cifrar</button>
+                <button type="button" data-modo="descifrar" aria-pressed="false">Descifrar</button>
+              </div>
+            </div>
+          </div>
+          <label>Resultado</label>
+          <div class="mono-out" id="cSalida" aria-live="polite"></div>
+        </div>
+
+        <div class="demo" id="demoHash">
+          <h3>Demo 2: función de una vía (SHA-256)</h3>
+          <p class="hint">Escribe cualquier texto. Cambia una sola letra y mira cómo cambia por completo el resultado.</p>
+          <label for="hTexto">Texto</label>
+          <input type="text" id="hTexto" value="hola" autocomplete="off">
+          <label style="margin-top:12px">Hash SHA-256 (64 caracteres hexadecimales)</label>
+          <div class="mono-out" id="hSalida" aria-live="polite"></div>
+        </div>
+
+        <p class="book"><strong>En el libro (Tanenbaum, 2009):</strong> 9.2 «Fundamentos de la criptografía», p. 616; 9.2.1 «Clave secreta», p. 617; 9.2.2 «Clave pública», p. 618; 9.2.3 «Funciones de una vía», p. 619; 9.2.4 «Firmas digitales», p. 619; 9.2.5 «Módulo de plataforma confiable», p. 621.</p>
+      </div>
+    </section>
+
+    <!-- ===================== RESUMEN ===================== -->
+    <section class="tema" id="resumen" aria-labelledby="hres">
+      <div class="wrap">
+        <div class="tema-head"><h2 id="hres">Resumen de la unidad</h2></div>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Tema</th><th>Idea clave</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">6.1 Concepto y objetivos</th><td>Seguridad = problema completo; protección = mecanismos del sistema. Objetivos: confidencialidad, integridad y disponibilidad.</td></tr>
+              <tr><th scope="row">6.2 Clasificación</th><td>Niveles de seguridad para usuarios y datos; Bell-LaPadula protege la confidencialidad y Biba la integridad.</td></tr>
+              <tr><th scope="row">6.3 Funciones</th><td>Autenticar, autorizar, aislar procesos, proteger archivos y dispositivos, separar política de mecanismo y auditar.</td></tr>
+              <tr><th scope="row">6.4 Matrices de acceso</th><td>Dominios × objetos = derechos. Se guardan por columnas (ACL) o por filas (capacidades).</td></tr>
+              <tr><th scope="row">6.5 Basada en el lenguaje</th><td>El compilador y la máquina virtual hacen cumplir reglas de tipos y acceso (por ejemplo, el verificador de Java).</td></tr>
+              <tr><th scope="row">6.6 Validación y amenazas</th><td>Autenticar con algo que sabes, tienes o eres; defenderse de ataques internos, errores explotables y malware.</td></tr>
+              <tr><th scope="row">6.7 Cifrado</th><td>Clave secreta, clave pública, funciones de una vía y firmas digitales protegen la confidencialidad y la autenticidad.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FUENTES ===================== -->
+    <section class="tema" id="referencias" aria-labelledby="href">
+      <div class="wrap">
+        <div class="tema-head"><h2 id="href">Fuentes</h2></div>
+        <ul class="clean refs">
+          <li>Tanenbaum, A. S. (2009). <em>Sistemas operativos modernos</em> (3.ª ed.). Pearson Educación. Capítulo 9, «Seguridad».</li>
+          <li>Silberschatz, A., Galvin, P. B., &amp; Gagne, G. (2006). <em>Fundamentos de sistemas operativos</em> (7.ª ed.). McGraw-Hill. Complemento para los temas 6.2 y 6.5.</li>
+        </ul>
+        <p class="hint" style="color:var(--muted);font-size:.95rem">Los números de página corresponden al libro impreso, no al visor del PDF.</p>
+
+        <h3>Equipo</h3>
+        <ul class="team">
+          <li>Chavira Lino Fabián</li>
+          <li>Quiñonez Herrera Yair </li>
+          <li>Guzmán Villegas Alfredo</li>
+          <li>Aguirre Loya Cesar</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">Trabajo escolar · Unidad VI: Protección y seguridad · Sistemas operativos</div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
